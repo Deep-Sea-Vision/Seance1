@@ -4,12 +4,12 @@ Correspond à la première version faite par Claude avec le prompt envoyé à la
 
 # V2
 
-Correspond à une version suivant le prompt suivant :
+Correspond à une version suivant le prompt suivant, mais ce lui ci n'a pas pu se finir.
 
 
 *Les noms sont Laurent, Coulongeat, Dubuc, Koch-Legrand, Claverie, rajoute les.*
 
-**Il faut que tu rajoutes un menu en haut à droite, lorsqu'on clique dessus il y a un bandeau déroulant sur  la zone droite de l'écran avec :*
+*Il faut que tu rajoutes un menu en haut à droite, lorsqu'on clique dessus il y a un bandeau déroulant sur  la zone droite de l'écran avec :*
 
 *- un bouton home pour revenir à la maison lorsqu'on est dans le jeu*
 
@@ -24,5 +24,3 @@ Correspond à une version suivant le prompt suivant :
 *Il faut pouvoir voir le nom du jeu "DEEP SEA VISION" au milieu en haut tout le temps avec un espace à gauche du nom avec le logo.*
 
 *Je veux une ambiance un peu plus marine. Actuellement l'ambiance est semblablea à du néon. Je veux quelque chose de moins IA et plus lier à la mer.*
-
-Le prompt n'a pas pu se finir.
