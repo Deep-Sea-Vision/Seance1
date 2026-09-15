@@ -1,10 +1,10 @@
 # V1 
 
-Correspond à la première version faite par Claude avec le prompt envoyé à la première séance.
+Correspond à la première version faite par Claude depuis le prompt et le code html de la première séance (en présentiel).
 
 # V2
 
-Correspond à une version suivant le prompt suivant, mais ce lui ci n'a pas pu se finir.
+Correspond à une version dépendant du prompt ci-dessous, mais celui-ci n'a pas pu se finir.
 
 
 *Les noms sont Laurent, Coulongeat, Dubuc, Koch-Legrand, Claverie, rajoute les.*
