@@ -1,8 +1,12 @@
 #V1 
+
 Correspond à la première version faite par Claude avec le prompt envoyé à la première séance.
 
-#V2
-Correspond à une version suivant le prompt suivant /
+# V2
+
+Correspond à une version suivant le prompt suivant :
+
+
 *Les noms sont Laurent, Coulongeat, Dubuc, Koch-Legrand, Claverie, rajoute les.
 
 Il faut que tu rajoutes un menu en haut à droite, lorsqu'on clique dessus il y a un bandeau déroulant sur  la zone droite de l'écran avec :
