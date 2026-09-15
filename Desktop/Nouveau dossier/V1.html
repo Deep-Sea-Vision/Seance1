@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DEEP SEA VISION: Object Detection Simulator</title>
+<style>
+  :root{
+    --abyss-0: #010810;
+    --abyss-1: #041325;
+    --abyss-2: #071d38;
+    --panel: #061a2e;
+    --panel-border: #0e3a5c;
+    --cyan: #4df3ff;
+    --cyan-dim: #1f8fa6;
+    --green: #6dffb0;
+    --amber: #ffb454;
+    --red: #ff5d6c;
+    --text-main: #cdeef5;
+    --text-dim: #6f9aab;
+    --font-mono: "Courier New", ui-monospace, "SF Mono", Consolas, monospace;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html, body{
+    margin:0; padding:0; height:100%;
+    background: radial-gradient(ellipse at 50% -10%, var(--abyss-2) 0%, var(--abyss-1) 45%, var(--abyss-0) 100%);
+    color: var(--text-main);
+    font-family: var(--font-mono);
+    overflow-x:hidden;
+  }
+
+  /* drifting particulate / marine snow backdrop */
+  .ocean-bg{
+    position: fixed; inset:0; z-index:0; pointer-events:none;
+    background-image:
+      radial-gradient(circle, rgba(77,243,255,0.12) 1px, transparent 1px),
+      radial-gradient(circle, rgba(77,243,255,0.08) 1px, transparent 1px);
+    background-size: 140px 140px, 90px 90px;
+    background-position: 0 0, 40px 60px;
+    animation: drift 60s linear infinite;
+    opacity:0.6;
+  }
+  @keyframes drift{
+    from{ background-position: 0 0, 40px 60px; }
+    to{ background-position: 0 900px, 40px 960px; }
+  }
+
+  .scanline{
+    position: fixed; inset:0; z-index:1; pointer-events:none;
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(77,243,255,0.025) 0px,
+      rgba(77,243,255,0.025) 1px,
+      transparent 2px,
+      transparent 4px
+    );
+  }
+
+  .stage{
+    position:relative; z-index:2;
+    min-height:100vh;
+    display:flex; align-items:center; justify-content:center;
+    padding: 32px 18px;
+  }
+
+  .scene{
+    display:none;
+    width:100%;
+    max-width: 720px;
+  }
+  .scene.active{
+    display:block;
+    animation: fadeIn 0.6s ease-out;
+  }
+  @keyframes fadeIn{
+    from{ opacity:0; transform: translateY(10px); }
+    to{ opacity:1; transform: translateY(0); }
+  }
+
+  .logo-placeholder{
+    width: 64px; height: 64px;
+    margin: 0 auto 18px auto;
+    border: 1px solid var(--panel-border);
+    border-radius: 50%;
+    display:flex; align-items:center; justify-content:center;
+    font-size: 10px; letter-spacing: 1px;
+    color: var(--text-dim);
+    background: radial-gradient(circle, rgba(77,243,255,0.08), transparent 70%);
+    box-shadow: 0 0 18px rgba(77,243,255,0.15);
+  }
+
+  .bg-media-placeholder{
+    display:none; /* placeholder hook for background video/image, off by default */
+  }
+
+  .panel{
+    background: linear-gradient(180deg, rgba(7,29,56,0.85), rgba(2,10,20,0.9));
+    border: 1px solid var(--panel-border);
+    border-radius: 6px;
+    padding: 34px 30px;
+    box-shadow:
+      0 0 0 1px rgba(77,243,255,0.05),
+      0 0 40px rgba(9,60,90,0.35),
+      inset 0 0 60px rgba(0,0,0,0.35);
+    position: relative;
+  }
+  .panel::before{
+    content:"";
+    position:absolute; top:0; left:0; right:0; height:2px;
+    background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+    opacity:0.6;
+  }
+
+  .depth-tag{
+    font-size: 11px;
+    color: var(--cyan-dim);
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+  }
+
+  h1, h2{
+    margin: 0 0 6px 0;
+    color: var(--cyan);
+    text-shadow: 0 0 12px rgba(77,243,255,0.45);
+    font-weight: 600;
+    line-height: 1.25;
+  }
+  h1{ font-size: clamp(1.3rem, 4vw, 1.9rem); text-align:center; }
+  h2{ font-size: clamp(1.15rem, 3.4vw, 1.5rem); }
+
+  .subtitle{
+    text-align:center;
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    margin-bottom: 26px;
+    letter-spacing: 0.5px;
+  }
+
+  .node-title-block{ margin-bottom: 18px; border-bottom: 1px solid var(--panel-border); padding-bottom: 14px; }
+
+  p.body-text{
+    color: var(--text-main);
+    line-height: 1.65;
+    font-size: 0.98rem;
+    margin: 0 0 26px 0;
+  }
+
+  .btn-group{
+    display:flex; flex-direction:column; gap: 12px;
+  }
+
+  button.choice{
+    font-family: var(--font-mono);
+    background: rgba(9,40,64,0.6);
+    color: var(--cyan);
+    border: 1px solid var(--cyan-dim);
+    border-radius: 4px;
+    padding: 14px 18px;
+    font-size: 0.92rem;
+    text-align: left;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.25s ease, border-color 0.25s ease, transform 0.15s ease, box-shadow 0.25s ease;
+  }
+  button.choice::before{
+    content: "›";
+    margin-right: 10px;
+    color: var(--green);
+  }
+  button.choice:hover, button.choice:focus-visible{
+    background: rgba(77,243,255,0.1);
+    border-color: var(--cyan);
+    box-shadow: 0 0 18px rgba(77,243,255,0.25);
+    transform: translateX(2px);
+  }
+  button.choice:focus-visible{ outline: 2px solid var(--cyan); outline-offset: 2px; }
+
+  .scene[data-status="fail"] h2{ color: var(--red); text-shadow: 0 0 14px rgba(255,93,108,0.5); }
+  .scene[data-status="fail"] .panel::before{ background: linear-gradient(90deg, transparent, var(--red), transparent); }
+  .scene[data-status="fail"] .depth-tag{ color: #c96b73; }
+
+  .scene[data-status="success"] h2{ color: var(--green); text-shadow: 0 0 14px rgba(109,255,176,0.5); }
+  .scene[data-status="success"] .panel::before{ background: linear-gradient(90deg, transparent, var(--green), transparent); }
+  .scene[data-status="success"] .depth-tag{ color: #4bcf8f; }
+
+  .footer-note{
+    text-align:center;
+    margin-top: 22px;
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .scene.active{ animation: none; }
+    .ocean-bg{ animation: none; }
+  }
+
+  @media (max-width: 480px){
+    .panel{ padding: 26px 18px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="ocean-bg"></div>
+<div class="scanline"></div>
+<div class="bg-media-placeholder" id="bgMedia"></div>
+
+<div class="stage">
+
+  <!-- SCENE: HOME -->
+  <section class="scene active" id="scene-home">
+    <div class="panel">
+      <div class="logo-placeholder">Logo</div>
+      <h1>DEEP SEA VISION: Object Detection Simulator</h1>
+      <p class="subtitle">A project by [Nom 1], [Nom 2], [Nom 3], [Nom 4], [Nom 5]</p>
+      <div class="btn-group">
+        <button class="choice" onclick="goTo('scene-select')">Start Mission</button>
+        <button class="choice" onclick="goTo('scene-howto')">How to Play</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCENE: HOW-TO -->
+  <section class="scene" id="scene-howto">
+    <div class="panel">
+      <div class="node-title-block">
+        <h2>HOW TO PLAY</h2>
+      </div>
+      <p class="body-text">
+        You are the central Artificial Intelligence of an Autonomous Underwater Vehicle (AUV). Your mission is to process sensor data (Cameras, Sonars, Magnetometers) to navigate the abyss.<br><br>
+        The ocean is a hostile environment for an AI: total darkness, marine snow, false positives, and crushing pressure will try to trick your sensors.<br><br>
+        Read the sensor data carefully and choose the best action. One wrong calculation could destroy the vessel.
+      </p>
+      <div class="btn-group">
+        <button class="choice" onclick="goTo('scene-select')">Understood, let's dive.</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCENE: SELECT -->
+  <section class="scene" id="scene-select">
+    <div class="panel">
+      <div class="node-title-block">
+        <h2>CHOOSE YOUR VESSEL</h2>
+        <p class="body-text" style="margin-bottom:0;">Select your hardware configuration:</p>
+      </div>
+      <div class="btn-group">
+        <button class="choice" onclick="goTo('node-a1')">BlueROV2 (Optical Camera &amp; YOLO AI - Environmental Mission)</button>
+        <button class="choice" onclick="goTo('node-b1')">Military AUV (Acoustic Sonar &amp; Stealth - Search &amp; Destroy)</button>
+        <button class="choice" onclick="goTo('node-c1')">Titan Submersible (Extreme Depth &amp; Pressure)</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PATH A: BLUEROV2 ============ -->
+
+  <section class="scene" id="node-a1">
+    <div class="panel">
+      <div class="node-title-block">
+        <div class="depth-tag">DEPTH: 200M</div>
+        <h2>The Light Problem</h2>
+      </div>
+      <p class="body-text">The YOLO AI algorithm works like a human eye: it needs light to recognize shapes and colors. Right now, the screen is pitch black. How should the AI proceed to find the target?</p>
+      <div class="btn-group">
+        <button class="choice" onclick="goTo('node-a-fail1')">Stay stealthy and rely on the camera in the dark.</button>
+        <button class="choice" onclick="goTo('node-a2')">Turn on the LED headlights.</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene" data-status="fail" id="node-a-fail1">
+    <div class="panel">
+      <div class="node-title-block">
+        <h2>CRASH!</h2>
+      </div>
+      <p class="body-text">At 200m, sunlight does not exist. YOLO analyzes a 100% black image and detects "nothing". You crashed head-first into a giant coral reef. Mission Failed.</p>
+      <div class="btn-group">
+        <button class="choice" onclick="goTo('scene-select')">Restart Simulation</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene" id="node-a2">
+    <div class="panel">
+      <div class="node-title-block">
+        <h2>Marine Snow</h2>
+      </div>
+      <p class="body-text">The lights are on, but the water is full of floating sand and dead organic matter called "Marine Snow" (turbidity). How should you adjust your lights to see clearly without blinding the AI?</p>
+      <div class="btn-group">
+        <button class="choice" onclick="goTo('node-a-fail2')">Maximum power straight ahead!</button>
+        <button class="choice" onclick="goTo('node-a3')">Low power, angled downwards.</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene" data-status="fail" id="node-a-fail2">
+    <div class="panel">
+      <div class="node-title-block">
+        <h2>BACKSCATTER BLINDNESS!</h2>
+      </div>
+      <p class="body-text">The bright light reflects off the floating sand directly back into the camera, creating a white wall (like high-beam headlights in fog). Blinded, the ROV drifts into a fishing net. Mission Failed.</p>
+      <div class="btn-group">
+        <button class="choice" onclick="goTo('scene-select')">Restart Simulation</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene" id="node-a3">
+    <div class="panel">
+      <div class="node-title-block">
+        <h2>The False Positive</h2>
+      </div>
+      <p class="body-text">An object is floating ahead. The YOLO AI gives a 45% confidence score for "Jellyfish" and a 55% score for "Plastic Bag". Remember: YOLO looks for specific geometry. Jellyfish have smooth, perfectly round bells. Look at the sharp edges of the object. What is your final decision?</p>
+      <div class="btn-group">
+        <button class="choice" onclick="goTo('node-a-fail3')">It's an animal (Jellyfish). Ignore it.</button>
+        <button class="choice" onclick="goTo('node-a4')">It's trash (Plastic Bag). Collect it.</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene" data-status="fail" id="node-a-fail3">
+    <div class="panel">
+      <div class="node-title-block">
+        <h2>THRUSTER JAMMED!</h2>
+      </div>
+      <p class="body-text">The AI ignored it. As the ROV passed by, the plastic bag got sucked into the left propeller. The engine burns out. The AI was fooled by the movement. Mission Failed.</p>
+      <div class="btn-group">
+        <button class="choice" onclick="goTo('scene-select')">Restart Simulation</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene" id="node-a4">
+    <div class="panel">
+      <div class="node-title-block">
+        <h2>Camouflage &amp; Geometry</h2>
+      </div>
+      <p class="body-text">You must find an underwater oil pipeline buried in the sand. Nature is chaotic and rarely makes perfect shapes. How does the AI know where the hidden pipeline is?</p>
+      <div class="btn-group">
+        <button class="choice" onclick="goTo('node-a-fail4')">By following a moving shadow on the sand.</button>
+        <button class="choice" onclick="goTo('node-a-success')">By detecting a perfectly straight geometric line.</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene" data-status="fail" id="node-a-fail4">
+    <div class="panel">
+      <div class="node-title-block">
+        <h2>LOST IN THE ABYSS!</h2>
+      </div>
+      <p class="body-text">You followed the shadow of a manta ray for 3 miles. You lost track of the pipeline, and your battery died. Mission Failed.</p>
+      <div class="btn-group">
+        <button class="choice" onclick="goTo('scene-select')">Restart Simulation</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene" data-status="success" id="node-a-success">
+    <div class="panel">
+      <div class="node-title-block">
+        <h2>MISSION SUCCESS!</h2>
+      </div>
+      <p class="body-text">Correct! Human engineering creates perfect straight lines and perfect circles. The YOLO AI successfully detects the straight geometry of the pipe under the sand.</p>
+      <div class="btn-group">
+        <button class="choice" onclick="goTo('scene-select')">Return to Base</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PATH B: MILITARY AUV ============ -->
+
+  <section class="scene" id="node-b1">
+    <div class="panel">
+      <div class="node-title-block">
+        <h2>Active vs Passive Sonar</h2>
+      </div>
+      <p class="body-text">Cameras are useless at this range. You must use Sonar. "Active Sonar" shouts a loud PING and listens to the echo. "Passive Sonar" only quietly listens to the ocean. You are in enemy territory. How do you find the target?</p>
+      <div class="btn-group">
+        <button class="choice" onclick="goTo('node-b1-alt')">Turn on Active Sonar (Send a PING).</button>
+        <button class="choice" onclick="goTo('node-b2')">Use Passive Sonar (Listen only).</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene" id="node-b1-alt">
+    <div class="panel">
+      <div class="node-title-block">
+        <h2>The Jamming Zone</h2>
+      </div>
+      <p class="body-text">WARNING! You sent an Active PING. The enemy heard you instantly! They deployed an acoustic jammer. Your sonar screen goes completely white with loud static noise. You are now blind. How do you track the enemy without your sonar?</p>
+      <div class="btn-group">
+        <button class="choice" onclick="goTo('node-b-fail1')">Turn on the LED cameras to look for them visually.</button>
+        <button class="choice" onclick="goTo('node-b-alt-success')">Use the MAD (Magnetic Anomaly Detector) to follow their steel hull.</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene" data-status="fail" id="node-b-fail1">
+    <div class="panel">
+      <div class="node-title-block">
+        <h2>TORPEDOED!</h2>
+      </div>
+      <p class="body-text">Visual range underwater is only 15 meters. The enemy fired a torpedo from 2 kilometers away using your camera lights as a beacon. Mission Failed.</p>
+      <div class="btn-group">
+        <button class="choice" onclick="goTo('scene-select')">Restart Simulation</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene" data-status="success" id="node-b-alt-success">
+    <div class="panel">
+      <div class="node-title-block">
+        <h2>PARTIAL SUCCESS!</h2>
+      </div>
+      <p class="body-text">You successfully used magnetic sensors to navigate through the acoustic jamming. It is too dangerous to fire a torpedo blindly, but you managed to record their acoustic signature and escape safely. The Navy is proud of your intel.</p>
+      <div class="btn-group">
+        <button class="choice" onclick="goTo('scene-select')">Return to Base</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene" id="node-b2">
+    <div class="panel">
+      <div class="node-title-block">
+        <h2>Biological Noise</h2>
+      </div>
+      <p class="body-text">The ocean is loud. You hear two sounds on your passive sonar: Click-click-wooo (random and changing) and Bzzzzzzz (constant and rhythmic). Which acoustic signature belongs to a machine?</p>
+      <div class="btn-group">
+        <button class="choice" onclick="goTo('node-b2-alt')">The random Click-click-wooo.</button>
+        <button class="choice" onclick="goTo('node-b3')">The rhythmic Bzzzzzzz.</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene" id="node-b2-alt">
+    <div class="panel">
+      <div class="node-title-block">
+        <h2>The Whale Cover</h2>
+      </div>
+      <p class="body-text">You followed the random biological noise. It was a pod of sperm whales. But wait! Your short-range sensors detect a massive shadow directly under the whales. The clever enemy submarine was using the loud whale clicks to mask its engine noise! You accidentally found them, but you are now dangerously close (only 50 meters away).</p>
+      <div class="btn-group">
+        <button class="choice" onclick="goTo('node-b-fail2')">Ram the submarine at full speed to destroy its propeller.</button>
+        <button class="choice" onclick="goTo('node-b-stealth-success')">Quietly deploy a magnetic GPS tracker on their hull.</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene" data-status="fail" id="node-b-fail2">
+    <div class="panel">
+      <div class="node-title-block">
+        <h2>CRUSHED!</h2>
+      </div>
+      <p class="body-text">Your AUV weighs 1 ton. The submarine weighs 5,000 tons. You smashed into their titanium hull like a mosquito on a windshield. You are destroyed, and the submarine didn't even feel it. Mission Failed.</p>
+      <div class="btn-group">
+        <button class="choice" onclick="goTo('scene-select')">Restart Simulation</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene" data-status="success" id="node-b-stealth-success">
+    <div class="panel">
+      <div class="node-title-block">
+        <h2>STEALTH VICTORY!</h2>
+      </div>
+      <p class="body-text">You maneuvered silently and attached a magnetic tracker to their hull. They never noticed you. The surface fleet can now track their movements globally via satellite when they surface. Mission Accomplished.</p>
+      <div class="btn-group">
+        <button class="choice" onclick="goTo('scene-select')">Return to Base</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene" id="node-b3">
+    <div class="panel">
+      <div class="node-title-block">
+        <h2>The Decoy</h2>
+      </div>
+      <p class="body-text">The enemy knows you are following them! They drop an acoustic decoy: a chemical pill that creates a massive cloud of bubbles. Sonar waves bounce off bubbles like a solid wall. On your screen, you see two targets. Which one is the real submarine?</p>
+      <div class="btn-group">
+        <button class="choice" onclick="goTo('node-b-fail3')">The huge, silent target.</button>
+        <button class="choice" onclick="goTo('node-b4')">The smaller, noisy target.</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene" data-status="fail" id="node-b-fail3">
+    <div class="panel">
+      <div class="node-title-block">
+        <h2>FOOLED BY BUBBLES!</h2>
+      </div>
+      <p class="body-text">You attacked the bubble cloud. It looks massive on sonar, but it's empty. The real enemy sneaks away while you shoot at bubbles. Mission Failed.</p>
+      <div class="btn-group">
+        <button class="choice" onclick="goTo('scene-select')">Restart Simulation</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene" id="node-b4">
+    <div class="panel">
+      <div class="node-title-block">
+        <h2>Magnetic Confirmation</h2>
+      </div>
+      <p class="body-text">You are 500 meters away. You need 100% confirmation before firing. The enemy submarine is made of 5,000 tons of steel. What final sensor do you use to confirm it's a military vessel?</p>
+      <div class="btn-group">
+        <button class="choice" onclick="goTo('node-b-fail4')">A thermometer to measure the water temperature.</button>
+        <button class="choice" onclick="goTo('node-b-success')">The MAD sensor (Magnetic Anomaly Detector).</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene" data-status="fail" id="node-b-fail4">
+    <div class="panel">
+      <div class="node-title-block">
+        <h2>HESITATION IS FATAL!</h2>
+      </div>
+      <p class="body-text">Temperature data is useless here. While your AI was trying to calculate water temperatures, the enemy submarine turned around and fired. Mission Failed.</p>
+      <div class="btn-group">
+        <button class="choice" onclick="goTo('scene-select')">Restart Simulation</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene" data-status="success" id="node-b-success">
+    <div class="panel">
+      <div class="node-title-block">
+        <h2>MISSION SUCCESS!</h2>
+      </div>
+      <p class="body-text">Correct! 5,000 tons of steel creates a massive disruption in the Earth's magnetic field. The MAD sensor confirms it's metal, not a whale. Torpedo launched. Target destroyed.</p>
+      <div class="btn-group">
+        <button class="choice" onclick="goTo('scene-select')">Return to Base</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PATH C: THE TITAN ============ -->
+
+  <section class="scene" id="node-c1">
+    <div class="panel">
+      <div class="node-title-block">
+        <h2>The Design Flaw</h2>
+      </div>
+      <p class="body-text">You are descending to the Titanic. Most deep-sea subs are perfect spheres made of Titanium. The Titan is a cylinder made of Carbon Fiber (great for pulling tension, very bad for crushing forces). What is the main risk of using Carbon Fiber for deep dives?</p>
+      <div class="btn-group">
+        <button class="choice" onclick="goTo('node-c-fail1')">It is too heavy and will sink too fast.</button>
+        <button class="choice" onclick="goTo('node-c2')">It weakens under repeated extreme compression.</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene" data-status="fail" id="node-c-fail1">
+    <div class="panel">
+      <div class="node-title-block">
+        <h2>FATAL ERROR</h2>
+      </div>
+      <p class="body-text">Carbon fiber is actually very light. Your AI failed to understand material physics. You descend at maximum speed, ignoring all safety protocols. The hull fractures immediately at 1500m. IMPLOSION. Mission Failed.</p>
+      <div class="btn-group">
+        <button class="choice" onclick="goTo('scene-select')">Restart Simulation</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene" id="node-c2">
+    <div class="panel">
+      <div class="node-title-block">
+        <div class="depth-tag">DEPTH: 3,200M</div>
+        <h2>The Acoustic Warning</h2>
+      </div>
+      <p class="body-text">You are at 3,200m. The water pressure is 320 times heavier than on the surface. The AI's internal microphone detects a sound from the hull: POP... CRACK... What does this acoustic data mean?</p>
+      <div class="btn-group">
+        <button class="choice" onclick="goTo('node-c-fail2')">The hull is just adjusting to the cold water. It's normal.</button>
+        <button class="choice" onclick="goTo('node-c3')">The carbon fiber layers are tearing apart (Delamination).</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene" data-status="fail" id="node-c-fail2">
+    <div class="panel">
+      <div class="node-title-block">
+        <h2>CRITICAL NEGLIGENCE</h2>
+      </div>
+      <p class="body-text">You ignore the cracking and continue the dive. The micro-fractures connect to form a massive crack. IMPLOSION. Mission Failed.</p>
+      <div class="btn-group">
+        <button class="choice" onclick="goTo('scene-select')">Restart Simulation</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene" id="node-c3">
+    <div class="panel">
+      <div class="node-title-block">
+        <div class="depth-tag">DEPTH: 3,500M — RED ALERT</div>
+        <h2>The Inevitable End</h2>
+      </div>
+      <p class="body-text">RED ALERT. The cracking sounds are continuous. The carbon fiber has lost 60% of its structural integrity. You are at 3,500m. As the AI, what is your emergency protocol?</p>
+      <div class="btn-group">
+        <button class="choice" onclick="goTo('node-c-implosion')">Turn on the internal water pumps to push the pressure out!</button>
+        <button class="choice" onclick="goTo('node-c-implosion')">Drop all emergency weights and ascend to the surface immediately!</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="scene" data-status="fail" id="node-c-implosion">
+    <div class="panel">
+      <div class="node-title-block">
+        <h2>CATASTROPHIC FAILURE</h2>
+      </div>
+      <p class="body-text">It doesn't matter what you choose. Pumps cannot fight 350 atmospheres of pressure. Ascending is too slow. The material fatigue is terminal. At this depth, the hull breach happens in 1 millisecond. Water enters at supersonic speed. The AI is destroyed before a human brain could even register the sound. The laws of physics cannot be bypassed by software. The ocean is unforgiving.</p>
+      <div class="btn-group">
+        <button class="choice" onclick="goTo('scene-select')">End of Simulation</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  function goTo(sceneId){
+    var current = document.querySelector('.scene.active');
+    var next = document.getElementById(sceneId);
+    if(!next) return;
+    if(current) current.classList.remove('active');
+    next.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>
