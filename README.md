@@ -46,7 +46,6 @@ Fichier : `DeepSeaVision.html`. Reprend V2 (menu, arborescence, plein écran, so
 **Texte**
 - Tout le texte de jeu est en anglais simple et direct, relu pour rester compréhensible sans vocabulaire technique inutile.
 
-# V4
 Retouche visuelle et de gameplay suite aux captures d'écran (accueil trop vide/mal placé, sélection en petit rectangle, panneau de question trop petit, pas de repère de progression).
 
 **Accueil**
