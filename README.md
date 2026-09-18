@@ -69,3 +69,4 @@ Retouche visuelle et de gameplay suite aux captures d'écran (accueil trop vide/
   - Titan : correcteur arbre de questions, arriver à une fin commune : "Outcome" qui est l'implosion. 
   - Avant chaque question, il doti y avoir une vidéo ou photo etsoit à la fin de la vidéo ou au bout 5secondes, la question apparait, il faut un bouton à gauche de larbre de progrès (logo ?) Lorsque l'on clique dessus on affiche ou fait disparaitre la question et les réponses. La vidéo ou photo prend totu l'écran (pas la barre du haut). L'arbre de progrès s'affiche par dessus la vidéo.
   - On remplace le menu en haut à drotie qui ouvre un volet déroulant. à la place on met un bouton maison qui ramène à l'accueil et un compteur de réussite et d'échec.
+  -Lors du choix des véhicules remplacé les dessins par les images correspondantes du ROV, de l'AUV et du Titan
