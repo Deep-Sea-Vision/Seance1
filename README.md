@@ -46,6 +46,7 @@ Fichier : `DeepSeaVision.html`. Reprend V2 (menu, arborescence, plein écran, so
 **Texte**
 - Tout le texte de jeu est en anglais simple et direct, relu pour rester compréhensible sans vocabulaire technique inutile.
 
+# V4
 Retouche visuelle et de gameplay suite aux captures d'écran (accueil trop vide/mal placé, sélection en petit rectangle, panneau de question trop petit, pas de repère de progression).
 
 **Accueil**
@@ -64,9 +65,22 @@ Retouche visuelle et de gameplay suite aux captures d'écran (accueil trop vide/
   - AUV militaire : sonar actif puis caméra dans la zone de brouillage → Game Over (torpillé) ; éperonner le sous-marin → Game Over (écrasé) ; les deux autres erreurs restent rejouables.
   - Titan : ignorer l'avertissement acoustique à 3200m → Game Over (implosion) ; l'erreur initiale sur le matériau reste rejouable ; la fin à 3500m reste la fin inévitable prévue dans l'arbre d'origine.
 
+# V4
+Corrections demandées après relecture des captures et de la todo-list.
 
-  # V4 à faire : 
-  - Titan : correcteur arbre de questions, arriver à une fin commune : "Outcome" qui est l'implosion. 
-  - Avant chaque question, il doti y avoir une vidéo ou photo etsoit à la fin de la vidéo ou au bout 5secondes, la question apparait, il faut un bouton à gauche de larbre de progrès (logo ?) Lorsque l'on clique dessus on affiche ou fait disparaitre la question et les réponses. La vidéo ou photo prend totu l'écran (pas la barre du haut). L'arbre de progrès s'affiche par dessus la vidéo.
-  - On remplace le menu en haut à drotie qui ouvre un volet déroulant. à la place on met un bouton maison qui ramène à l'accueil et un compteur de réussite et d'échec.
-  -Lors du choix des véhicules remplacé les dessins par les images correspondantes du ROV, de l'AUV et du Titan
+**Titan : arbre corrigé**
+- Les deux façons d'échouer (ignorer l'alerte acoustique à 3200m, ou atteindre la fin inévitable à 3500m) mènent maintenant au même écran final "OUTCOME: IMPLOSION", au lieu de deux écrans séparés. Le repère de mission à droite affiche correctement cette dernière étape comme "Outcome" au lieu de rester bloqué sur une étape intermédiaire.
+
+**Photo plein écran avant chaque étape**
+- Chaque écran de mission (briefing, question, conséquence, succès, échec) affiche maintenant en plein fond la vraie photo du véhicule (fournie par vous : BlueROV2, AUV militaire, Titan), sous la barre du haut.
+- Le panneau de texte/question reste caché pendant les 5 premières secondes pour laisser voir la photo, puis apparaît automatiquement.
+- Un bouton œil est apparu à gauche du repère de mission (à droite de l'écran) : il permet à tout moment de masquer ou réafficher le panneau de question pour revoir la photo.
+- Remarque : je n'ai que des photos (pas de vidéos) pour les 3 véhicules, donc le mécanisme "fin de vidéo" n'a pas pu être implémenté — seul le minuteur de 5 secondes déclenche l'apparition de la question.
+
+**Nouvelle barre du haut**
+- Le menu déroulant (hamburger + volet + arborescence détaillée) a été retiré.
+- À la place : un bouton maison (retour direct à l'accueil) et un compteur "✓ réussites / ✗ échecs" qui s'incrémente à chaque fin de mission (succès ou Game Over). Le son et le plein écran restent à leur place.
+- Le repère de mission (liste des étapes à droite) remplace l'ancienne arborescence détaillée du menu.
+
+**Choix du véhicule**
+- Les icônes dessinées ont été remplacées par les vraies photos que vous avez fournies (ROV.png, AUV_militaire.jpg, TITAN.jpg), recadrées en vignettes.
