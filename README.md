@@ -64,23 +64,9 @@ Retouche visuelle et de gameplay suite aux captures d'écran (accueil trop vide/
   - BlueROV2 : rester dans le noir → Game Over (collision) ; suivre une ombre trop longtemps → Game Over (batterie épuisée) ; les deux autres erreurs restent rejouables.
   - AUV militaire : sonar actif puis caméra dans la zone de brouillage → Game Over (torpillé) ; éperonner le sous-marin → Game Over (écrasé) ; les deux autres erreurs restent rejouables.
   - Titan : ignorer l'avertissement acoustique à 3200m → Game Over (implosion) ; l'erreur initiale sur le matériau reste rejouable ; la fin à 3500m reste la fin inévitable prévue dans l'arbre d'origine.
+# V5
+Corrections rapides suite aux dernières captures.
 
-# V4
-Corrections demandées après relecture des captures et de la todo-list.
-
-**Titan : arbre corrigé**
-- Les deux façons d'échouer (ignorer l'alerte acoustique à 3200m, ou atteindre la fin inévitable à 3500m) mènent maintenant au même écran final "OUTCOME: IMPLOSION", au lieu de deux écrans séparés. Le repère de mission à droite affiche correctement cette dernière étape comme "Outcome" au lieu de rester bloqué sur une étape intermédiaire.
-
-**Photo plein écran avant chaque étape**
-- Chaque écran de mission (briefing, question, conséquence, succès, échec) affiche maintenant en plein fond la vraie photo du véhicule (fournie par vous : BlueROV2, AUV militaire, Titan), sous la barre du haut.
-- Le panneau de texte/question reste caché pendant les 5 premières secondes pour laisser voir la photo, puis apparaît automatiquement.
-- Un bouton œil est apparu à gauche du repère de mission (à droite de l'écran) : il permet à tout moment de masquer ou réafficher le panneau de question pour revoir la photo.
-- Remarque : je n'ai que des photos (pas de vidéos) pour les 3 véhicules, donc le mécanisme "fin de vidéo" n'a pas pu être implémenté — seul le minuteur de 5 secondes déclenche l'apparition de la question.
-
-**Nouvelle barre du haut**
-- Le menu déroulant (hamburger + volet + arborescence détaillée) a été retiré.
-- À la place : un bouton maison (retour direct à l'accueil) et un compteur "✓ réussites / ✗ échecs" qui s'incrémente à chaque fin de mission (succès ou Game Over). Le son et le plein écran restent à leur place.
-- Le repère de mission (liste des étapes à droite) remplace l'ancienne arborescence détaillée du menu.
-
-**Choix du véhicule**
-- Les icônes dessinées ont été remplacées par les vraies photos que vous avez fournies (ROV.png, AUV_militaire.jpg, TITAN.jpg), recadrées en vignettes.
+- **Accueil** : la petite icône de sous-marin a été remplacée par un vrai visuel de sonar (écran radar circulaire, cercles concentriques, faisceau balayant en rotation, points qui apparaissent/disparaissent), et agrandi.
+- **Choix du véhicule** : les photos des 3 vaisseaux sont nettement plus grandes dans leurs colonnes.
+- **Écrans de mission** : la photo de fond n'est plus étirée/zoomée en plein cadre. Elle apparaît maintenant entière et nette au centre de l'écran (sans être coupée), avec un fond flouté de la même image tout autour pour garder l'effet plein écran.
