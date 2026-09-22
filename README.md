@@ -70,3 +70,10 @@ Corrections rapides suite aux dernières captures.
 - **Accueil** : la petite icône de sous-marin a été remplacée par un vrai visuel de sonar (écran radar circulaire, cercles concentriques, faisceau balayant en rotation, points qui apparaissent/disparaissent), et agrandi.
 - **Choix du véhicule** : les photos des 3 vaisseaux sont nettement plus grandes dans leurs colonnes.
 - **Écrans de mission** : la photo de fond n'est plus étirée/zoomée en plein cadre. Elle apparaît maintenant entière et nette au centre de l'écran (sans être coupée), avec un fond flouté de la même image tout autour pour garder l'effet plein écran.
+
+# V6
+Trouver les photos. Objectif :
+- Tout doit tenir dans une seule page, ajuster pour éviter le scoll vertical
+- jeu interactif : Rajouter une charge utile sur le ROV : IMU, Sonar, capteur de pression, pinger, bombe. Rajouter des types de communications : GPS, wifi, fibre optique par câble. Architecture Logiciel : ROS, Python ou Granta.
+- jeu interactif : structurer le véhicule militaire : 0 1 2 3 ou 4 compartiments , réseau ethernet interne, huile diélectrique, eau, air, moteur thermique, moteur électrique, moteur nucléaire.
+- jeu interactif : Rajouter sur le Titan des objets bizarre : manette de jeu vidéo, gobelet en polystyrène, scafandre, préservatifs.
