@@ -1,0 +1,104 @@
+[GLOBAL UI MECHANIC: BATTERY / CPU GAUGE]
+A persistent energy bar is visible. Actions like using active sonar or max LED lights drain it faster, adding tension to decision-making.
+
+[HOME]
+→ START → [SELECT]
+→ How to Play → [HOW-TO] → Got it, back to home. → [HOME]   
+
+[SELECT] CHOOSE YOUR VESSEL
+→ BlueROV2 → A1
+→ Military AUV → B1
+→ Titan Submersible → C1   
+
+=== PATH A — BLUEROV2 ===
+A1 (The Light Problem)
+Question: The YOLO AI works like a human eye: it needs light to recognize shapes and colors. Right now, the screen is pitch black. How should the AI proceed to find the target?
+→ Stay stealthy and rely on the camera in the dark. → A1-FAIL [FAIL: HULL BREACH]
+→ Turn on the LED headlights. → A2   
+
+A2 (Marine Snow)
+[MECHANIC: SLIDER INTERFACE. Instead of simple buttons, the player uses a slider to adjust LED intensity. Setting it to 100% triggers A2-WARN. Setting it to ~30% (Low power) triggers A3.]
+Question: The lights are on, but the water is full of floating sand and organic particles called "marine snow" (turbidity). How should you set your lights to see clearly without blinding the AI?
+→ Maximum power, straight ahead. → A2-WARN [WARN: BACKSCATTER]
+→ Low power, angled downwards. → A3   
+
+A3 (The False Positive)
+Question: An object is floating ahead. YOLO gives a 45% confidence score for "jellyfish" and a 55% score for "plastic bag". Jellyfish have smooth, round bells; this object has sharp, angular edges. What is your final decision?
+→ It's an animal (jellyfish). Ignore it. → A3-WARN [WARN: SECOND LOOK]
+→ It's trash (plastic bag). Investigate. → A4   
+
+A4 (Camouflage & Geometry)
+[MINI-GAME: YOLO CALIBRATION. The screen shows a noisy image of the seabed with organic shapes and a faint straight pipe. The player has 5 seconds to click and drag a "bounding box" exactly around the straight geometric line.]
+Question: You must find the underwater pipeline buried in the sand. Nature is chaotic and rarely makes perfectly straight shapes. How does the AI find the hidden pipeline?
+→ By following a moving shadow on the sand. (Triggered if bounding box is drawn on the organic shape or time runs out) → A4-FAIL [FAIL: LOST AT SEA]
+→ By detecting a perfectly straight geometric line. (Triggered if bounding box is correctly drawn on the pipe) → A-SUCCESS [SUCCESS: MISSION SUCCESS!]   
+
+=== PATH B — MILITARY AUV ===
+B1 (Active vs Passive Sonar)
+Question: Cameras are useless at this range. "Active sonar" sends a loud PING and listens for the echo. "Passive sonar" only quietly listens to the ocean. You are in enemy territory. How do you search for the target?
+→ Turn on active sonar (send a PING). → B1-ALT
+→ Use passive sonar (listen only). → B2   
+
+B1-ALT (The Jamming Zone)
+[MECHANIC: UI GLITCH. The CSS of the webpage scrambles, simulating electronic jamming. The button for the MAD sensor moves randomly around the screen.]
+Question: Warning: the enemy heard your PING instantly and deployed an acoustic jammer. Your sonar screen turns to static and you are effectively blind. How do you keep tracking the enemy?
+→ Turn on the cameras to search visually. (Or if the player fails to click the moving button in time) → B-FAIL-TORPEDO [FAIL: TORPEDOED]
+→ Use the MAD (Magnetic Anomaly Detector) to follow their steel hull. (Player successfully clicks the moving glitchy button) → B-ALT-SUCCESS [SUCCESS: PARTIAL SUCCESS]   
+
+B2 (Biological Noise)
+[MINI-GAME: OSCILLOSCOPE. The player hears a mix of whale clicks and engine humming. They must use a frequency slider to filter out the high-pitch clicks and isolate the low-pitch "bzzzzzzz" pattern before choosing.]
+Question: The ocean is loud. Passive sonar picks up two sounds: a random "click-click-wooo" and a constant, rhythmic "bzzzzzzz". Which signature is more likely to come from a machine?
+→ The random click-click-wooo. → B2-ALT
+→ The rhythmic bzzzzzzz. → B3   
+
+B2-ALT (The Whale Cover)
+[MINI-GAME: STEALTH TIMING. A radar sweep moves across the screen. The player must hold down the mouse to advance, but release it EXACTLY when the green radar wave passes over them to avoid detection.]
+Question: You followed the biological noise: it was a pod of sperm whales. But a short-range sensor picks up a massive metallic shadow directly beneath them. The enemy submarine was hiding its engine noise behind the whale clicks. You are now only 50 meters away.
+→ Ram the submarine to disable its propeller. (Or player fails the stealth timing mini-game) → B-FAIL-CRUSH [FAIL: CRUSHED]
+→ Quietly attach a magnetic tracker to their hull. (Player succeeds the stealth timing mini-game) → B-STEALTH-SUCCESS [SUCCESS: STEALTH VICTORY!]   
+
+B3 (The Decoy)
+Question: The enemy knows you are close. They release a chemical decoy that creates a massive cloud of bubbles. Sonar waves bounce off bubbles almost like a solid wall, and your screen now shows two targets. Which one is the real submarine?
+→ The huge, silent target. → B3-WARN [WARN: WASTED SECONDS]
+→ The smaller, noisy target. → B4   
+
+B4 (Magnetic Confirmation)
+Question: You are 500 meters away and need full confirmation before acting. The suspected vessel is made of thousands of tons of steel. What sensor gives you final proof it's a real submarine and not something else?
+→ A thermometer to measure water temperature. → B4-WARN [WARN: WRONG TOOL]
+→ The MAD sensor (Magnetic Anomaly Detector). → B-SUCCESS [SUCCESS: MISSION SUCCESS!]   
+
+=== PATH C — TITAN SUBMERSIBLE ===
+
+C1 (The Design Flaw & System Setup)
+Question: You are diving to a famous shipwreck at 3,800m. Unlike standard titanium spheres, your sub is a cylinder made of carbon fiber. You need to configure your AI parameters for the dive. What is the biggest physical risk with this hull, and how should your AI compensate?
+→ It's way too heavy. Prioritize active sonar to find the bottom quickly before we crash. → C1-FAIL [FAIL: WRONG PHYSICS. The sub crashes into the seabed at high speed. Carbon fiber is actually very light, not heavy.]
+→ It's prone to rust. Turn on magnetic sensors to track hull decay. → C1-WARN [WARN: SENSOR ERROR. Carbon fiber doesn't rust. You waste battery recalibrating. Go to C2.]
+→ It weakens under repeated extreme compression. Prioritize acoustic monitoring to listen to the hull, and use passive sensors to avoid collisions. → C2
+
+C2 (The Twilight Zone — Sensor Puzzle)
+[MINI-GAME: AUDIO DRAG & DROP. The player hears 3 distinct audio files: a squishy organic sound, a cold metallic echo, and a faint electric hum. They must drag and drop these sounds onto the correct text labels.]
+Question: At 1,500m, it's pitch black. Your passive sensors pick up three distinct signatures blocking your descent path. You must classify them correctly to navigate safely.
+→ Match: 1=Debris, 2=Giant Squid, 3=Mine. Steer away from the "mine" and drive through the "debris". → C2-FAIL [FAIL: CRITICAL COLLISION. You drove straight into solid metal debris because you thought it was a soft animal. The fragile hull cracks.]
+→ Match: 1=Giant Squid, 2=Shipwreck Debris, 3=Research Drone. Shut off lights to avoid startling the squid, and steer clear of the sharp metal. → C3
+→ Ignore the classification and blast a loud active sonar PING to scare everything away. → C2-ANIMAL [WARN: THE KRAKEN WAKES. The loud noise startles a massive deep-sea squid. It grabs the sub, severely straining the experimental carbon fiber hull before letting go. Go to C4.]
+
+C3 (Visual Recognition — The Debris Field)
+[MINI-GAME: GEOMETRIC FILTER. A blurry shape looms. The player has a 4-second timer to draw a 90-degree angle on the screen to activate the AI's geometry filter. If they fail, they crash (C3-FAIL).]
+Question: You reach 3,000m. The AI camera spots a massive, looming shape emerging from the gloom. The image recognition software is flickering between two possibilities: a dense school of deep-sea grenadier fish, or a massive piece of the shipwreck's bow. How does the AI tell the difference?
+→ Look for motion. If it's drifting slowly, it's a school of fish. Drive right through it to save time. → C3-FAIL [FAIL: COLLISION. Ocean currents move heavy metal too. You slam into the steel hull of the wreck. The carbon fiber shatters.]
+→ Look for 90-degree angles and straight lines. Nature doesn't build perfectly straight edges. It's the wreck. Steer around it carefully. → C4
+→ Shine the high-beam LEDs directly at it to check for reflective fish scales. → C3-WARN [WARN: BLINDED BY BACKSCATTER. The water is full of rust particles from the wreck. The light blinds your cameras, but you narrowly avoid a crash using backup sonar. Go to C4.]
+
+C4 (The Acoustic Warning — 3,200m)
+[MECHANIC: UI SHAKE. As this node loads, a terrifying POP... CRACK sound plays, and the entire HTML interface violently shakes, simulating structural strain.]
+Question: The pressure outside is now 320 times greater than at the surface. Suddenly, the hull's internal acoustic monitoring microphone picks up a sharp sound: POP... CRACK... What does this signal mean?
+→ The hull is just adjusting to the temperature drop. Keep descending. → C-IMPLOSION [FAIL: OUTCOME: IMPLOSION.]
+→ We probably just bumped into a small jellyfish. Ignore it. → C-IMPLOSION [FAIL: OUTCOME: IMPLOSION.]
+→ Delamination. The carbon fiber layers are tearing apart under the pressure. Halt the descent immediately! → C5
+
+C5 (The Inevitable End — 3,500m)
+[MINI-GAME: PANIC QTE. The background turns red. A massive "CRITICAL PRESSURE" gauge fills up uncontrollably. Clicking ANY choice forces the player to mash their mouse/keyboard frantically to "execute protocol". Despite their frantic clicks, the screen cracks visually (glass shatter effect) and cuts to black.]
+Question: Red alert. Even though you stopped the descent, the cracking sounds are now continuous and getting louder. The carbon fiber has suffered too much fatigue. As the AI, what is your ultimate emergency protocol?
+→ Reverse the internal ballast pumps to push air against the outside pressure. → C-IMPLOSION [FAIL: OUTCOME: IMPLOSION.]
+→ Drop all emergency weights, detach the landing frame, and try to rocket to the surface. → C-IMPLOSION [FAIL: OUTCOME: IMPLOSION.]
+→ Divert all power to the thrusters and drive upwards. → C-IMPLOSION [FAIL: OUTCOME: IMPLOSION.]
