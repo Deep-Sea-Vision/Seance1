@@ -1,63 +1,51 @@
 [HOME]
-  → Start Mission → [SELECT]
-  → How to Play → [HOW-TO] → Understood, let's dive. → [SELECT]
+→ START → [SELECT]
+→ How to Play → [HOW-TO] → Got it, back to home. → [HOME]   
 
-[SELECT] Choisir le véhicule
-  → BlueROV2 → A1
-  → Military AUV → B1
-  → Titan Submersible → C1
+[SELECT] CHOOSE YOUR VESSEL
+→ BlueROV2 → A1
+→ Military AUV → B1
+→ Titan Submersible → C1  
 
 === PATH A — BLUEROV2 ===
 A1 (The Light Problem)
-  → Stay stealthy, rely on camera in the dark → A-FAIL1 [ÉCHEC: Crash contre le récif]
-  → Turn on LED headlights → A2
-
+→ Stay stealthy and rely on the camera in the dark. → A1-FAIL [FAIL: HULL BREACH]
+→ Turn on the LED headlights. → A2   
 A2 (Marine Snow)
-  → Maximum power straight ahead → A-FAIL2 [ÉCHEC: Backscatter, aveuglé, filet de pêche]
-  → Low power, angled downwards → A3
-
+→ Maximum power, straight ahead. → A2-WARN [WARN: BACKSCATTER]
+→ Low power, angled downwards. → A3   
 A3 (The False Positive)
-  → C'est un animal (Jellyfish), on ignore → A-FAIL3 [ÉCHEC: Sac plastique coincé dans l'hélice]
-  → C'est un déchet (Plastic Bag), on collecte → A4
-
+→ It's an animal (jellyfish). Ignore it. → A3-WARN [WARN: SECOND LOOK]
+→ It's trash (plastic bag). Investigate. → A4   
 A4 (Camouflage & Geometry)
-  → Suivre une ombre mouvante → A-FAIL4 [ÉCHEC: Perdu en suivant une raie manta]
-  → Détecter une ligne géométrique droite → A-SUCCESS [SUCCÈS: Pipeline détecté]
+→ By following a moving shadow on the sand. → A4-FAIL [FAIL: LOST AT SEA]
+→ By detecting a perfectly straight geometric line. → A-SUCCESS [SUCCESS: MISSION SUCCESS!]   
 
 === PATH B — MILITARY AUV ===
 B1 (Active vs Passive Sonar)
-  → Sonar actif (PING) → B1-ALT
-  → Sonar passif (écoute) → B2
-
+→ Turn on active sonar (send a PING). → B1-ALT
+→ Use passive sonar (listen only). → B2   
 B1-ALT (The Jamming Zone)
-  → Caméras pour chercher visuellement → B-FAIL1 [ÉCHEC: Torpillé, repéré par la lumière]
-  → MAD (détecteur magnétique) pour suivre la coque → B-ALT-SUCCESS [SUCCÈS PARTIEL: Signature acoustique enregistrée]
-
+→ Turn on the cameras to search visually. → B-FAIL-TORPEDO [FAIL: TORPEDOED]
+→ Use the MAD (Magnetic Anomaly Detector) to follow their steel hull. → B-ALT-SUCCESS [SUCCESS: PARTIAL SUCCESS]   
 B2 (Biological Noise)
-  → Suivre le bruit aléatoire (Click-click-wooo) → B2-ALT
-  → Suivre le bruit rythmique (Bzzzzzzz) → B3
-
+→ The random click-click-wooo. → B2-ALT
+→ The rhythmic bzzzzzzz. → B3   
 B2-ALT (The Whale Cover)
-  → Éperonner le sous-marin → B-FAIL2 [ÉCHEC: Écrasé, 1 tonne contre 5000 tonnes]
-  → Déposer discrètement un traceur GPS magnétique → B-STEALTH-SUCCESS [SUCCÈS: Victoire furtive]
-
+→ Ram the submarine to disable its propeller. → B-FAIL-CRUSH [FAIL: CRUSHED]
+→ Quietly attach a magnetic tracker to their hull. → B-STEALTH-SUCCESS [SUCCESS: STEALTH VICTORY!]   
 B3 (The Decoy)
-  → Cible large et silencieuse (bulles) → B-FAIL3 [ÉCHEC: Dupé par le nuage de bulles]
-  → Cible plus petite et bruyante → B4
-
-B4 (Magnetic Confirmation)
-  → Thermomètre → B-FAIL4 [ÉCHEC: Hésitation fatale, tiré le premier]
-  → Capteur MAD → B-SUCCESS [SUCCÈS: Cible confirmée et détruite]
-
+→ The huge, silent target. → B3-WARN [WARN: WASTED SECONDS]
+→ The smaller, noisy target. → B4   B4 (Magnetic Confirmation)
+→ A thermometer to measure water temperature. → B4-WARN [WARN: WRONG TOOL]
+→ The MAD sensor (Magnetic Anomaly Detector). → B-SUCCESS [SUCCESS: MISSION SUCCESS!]  
 === PATH C — TITAN SUBMERSIBLE ===
 C1 (The Design Flaw)
-  → Trop lourd, coule trop vite → C-FAIL1 [ÉCHEC: Erreur de physique des matériaux, implosion à 1500m]
-  → S'affaiblit sous compression répétée → C2
-
-C2 (The Acoustic Warning — 3200m)
-  → C'est normal, adaptation au froid → C-FAIL2 [ÉCHEC: Négligence critique, implosion]
-  → Délaminage des fibres de carbone → C3
-
-C3 (The Inevitable End — 3500m, alerte rouge)
-  → Activer les pompes internes → C-IMPLOSION [ÉCHEC INÉVITABLE]
-  → Larguer les lests et remonter → C-IMPLOSION [ÉCHEC INÉVITABLE — les deux choix mènent au même sort]
+→ It is too heavy and will sink too fast. → C1-WARN [WARN: WRONG PHYSICS]
+→ It weakens under repeated extreme compression. → C2   
+C2 (The Acoustic Warning)
+→ The hull is just adjusting to the cold water. Continue the dive as planned. → C-IMPLOSION [FAIL: OUTCOME: IMPLOSION]
+→ The carbon fiber layers are tearing apart (delamination). Halt the descent. → C3   
+C3 (The Inevitable End)
+→ Turn on the internal pumps to push against the pressure. → C-IMPLOSION [FAIL: OUTCOME: IMPLOSION]
+→ Drop all emergency weights and try to surface immediately. → C-IMPLOSION [FAIL: OUTCOME: IMPLOSION]
