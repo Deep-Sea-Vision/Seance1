@@ -4,60 +4,141 @@
 
 [SELECT] CHOOSE YOUR VESSEL
 → BlueROV2 → A1
-→ Military AUV → B1
+→ Military AUV → A1
 → Titan Submersible → C1   
 
-=== PATH A — BLUEROV2 ===
-A1 (The Light Problem)
-Question: The YOLO AI works like a human eye: it needs light to recognize shapes and colors. Right now, the screen is pitch black. How should the AI proceed to find the target?
-→ Stay stealthy and rely on the camera in the dark. → A1-FAIL [FAIL: HULL BREACH]
-→ Turn on the LED headlights. → A2   
 
-A2 (Marine Snow)
-Question: The lights are on, but the water is full of floating sand and organic particles called "marine snow" (turbidity). How should you set your lights to see clearly without blinding the AI?
-→ Maximum power, straight ahead. → A2-WARN [WARN: BACKSCATTER]
-→ Low power, angled downwards. → A3   
 
-A3 (The False Positive)
-Question: An object is floating ahead. YOLO gives a 45% confidence score for "jellyfish" and a 55% score for "plastic bag". Jellyfish have smooth, round bells; this object has sharp, angular edges. What is your final decision?
-→ It's an animal (jellyfish). Ignore it. → A3-WARN [WARN: SECOND LOOK]
-→ It's trash (plastic bag). Investigate. → A4   
 
-A4 (Camouflage & Geometry)
-Question: You must find the underwater pipeline buried in the sand. Nature is chaotic and rarely makes perfectly straight shapes. How does the AI find the hidden pipeline?
-→ By following a moving shadow on the sand. → A4-FAIL [FAIL: LOST AT SEA]
-→ By detecting a perfectly straight geometric line. → A-SUCCESS [SUCCESS: MISSION SUCCESS!]   
+
+Path: A — DEEP SEA DESCENT
+Mechanics Added: Interactive Terminal Puzzles, "Second Chance" Bonus System.
+
+=== PATH A: THE QUESTIONS ===
+A1 (The Depth Barrier)
+Question: The ROV dives below 200 meters. Sunlight disappears, rendering the camera useless for long-range navigation. How should the AI map the ocean floor?
+→ Connect to GPS satellites. → A1-FAIL [FAIL: NO SIGNAL]
+→ Use acoustic Sonar to bounce sound waves. → A2
+
+A2 (Thermal Drain)
+Question: Deep water is 2°C. Battery voltage drops twice as fast due to the cold. The mission is only half done. What is the best power-saving strategy?
+→ Shut down the internal system heaters. → A2-FAIL [FAIL: CPU FROZE]
+→ Reduce thruster speed and disable non-essential sensors. → A3
+
+A3 (The Acoustic Delay)
+Question: You are piloting via acoustic modems. Sound travels at 1,500 m/s in water, creating a 4-second delay for every command. A rock wall suddenly appears!
+→ Wait for the human pilot to send an evasion command. → A3-FAIL [FAIL: CRASHED INTO REEF]
+→ Give the AI permission for local obstacle avoidance. → A4
+
+A4 (Dataset Bias)
+Question: The YOLO AI detects a massive, writhing shape. It classifies it as "Multiple Serpents" (90% confidence). The AI was only trained on shallow-water animals. What is this deep-sea creature?
+→ A nest of toxic sea snakes. → A4-WARN [WARN: WRONG HABITAT]
+→ A giant squid moving its tentacles. → A5
+
+A5 (INTERACTIVE MINI-GAME: Thrust Allocation)
+Context: A strong lateral underwater current from the East pushes the ROV off course.
+Action: You must type a command into the terminal to allocate your 10 available power units to reach the target located straight North.
+→ Command: THRUST_NORTH(10) | THRUST_WEST(0) → A5-FAIL [FAIL: SWEPT AWAY BY CURRENT]
+→ Command: THRUST_NORTH(0) | THRUST_EAST(10) → A5-FAIL [FAIL: GOING WRONG DIRECTION]
+→ Command: THRUST_NORTH(5) | THRUST_WEST(5) → A6 [SUCCESS: DIAGONAL CRAA-WALK]
+
+A6 (The Manipulator Arm)
+Question: You found the target: a fragile flight data recorder. The robotic claw needs to grab it without crushing the casing. Which sensor feedback should the AI prioritize?
+→ Visual confirmation from the camera. → A6-FAIL [FAIL: CRUSHED TARGET]
+→ Haptic (force/pressure) sensors in the claw joints. → A7
+
+A7 (Bio-Fouling)
+Question: Tiny barnacles and algae attach to the main camera dome, blurring the center of the image. The AI cannot see the path ahead clearly.
+→ Run the thrusters in reverse to wash them off. → A7-WARN [WARN: INEFFECTIVE]
+→ Switch to the secondary peripheral cameras and stitch the images. → A8
+
+A8 (INTERACTIVE MINI-GAME: Wavelength Filter)
+Context: A school of lanternfish surrounds the ROV. Their bioluminescence (blue light, 470nm) blinds the AI object tracking, creating thousands of false targets.
+Action: Adjust the YOLO vision optical filter slider to isolate the metal target (lit by the ROV's white LEDs).
+→ Apply Filter: ISOLATE 400-500nm → A8-FAIL [FAIL: BLINDED BY FISH]
+→ Apply Filter: ENHANCE ALL LIGHTS → A8-FAIL [FAIL: CPU OVERHEAT]
+→ Apply Filter: CUTOFF 400-500nm → A9 [SUCCESS: SWARM FILTERED OUT]
+
+A9 (Tether Entanglement)
+Question: The ROV is connected to the surface by a cable (tether). A tension alert triggers: the cable just wrapped around a coral pillar! Pulling hard will snap it.
+→ Spin rapidly in a random direction to shake it loose. → A9-FAIL [FAIL: TETHER SNAPPED]
+→ Command the AI to replay its 3D movement log backward to retrace its exact path. → A10
+
+A10 (The Emergency Ascent)
+Question: Mission complete, but the main battery is dead. The ROV has no thruster power to swim back to the surface ship. How does it get home?
+→ Wait for the surface ship to forcefully reel in the tether. → A10-FAIL [FAIL: CABLE TENSION RISK]
+→ Trigger the electromagnetic release to drop the heavy metal ballast weights and float up naturally. → A-SUCCESS [SUCCESS: MISSION COMPLETE!]
+
+=== BONUS RECOVERY SYSTEM ===
+Rules: If a player chooses a "FAIL" answer, they do not restart immediately. Instead, they trigger the relevant Bonus Question. A correct answer acts as an emergency override, saving the ROV and allowing them to continue to the next main question. An incorrect answer results in a true Game Over.
+
+BONUS 1 (Trigger: Failing A1, A2, or A3)
+Emergency Reboot Sequence! The AI core crashed due to an environmental error. To reboot the acoustic navigation system, you must input the exact speed of sound in water.
+→ Input: 340 m/s (Speed in air). → GAME OVER
+→ Input: 1,500 m/s. → RECOVERY SUCCESS (Proceed to next question)
+
+BONUS 2 (Trigger: Failing A4, A5, or A6)
+System Override! The main camera is shattered. The AI is asking for a backup primary sensor to "see" the environment in 3D without light. Which hardware do you activate?
+→ The LED Headlights. → GAME OVER
+→ The Multi-beam Sonar. → RECOVERY SUCCESS (Proceed to next question)
+
+BONUS 3 (Trigger: Failing A7, A8, or A9)
+Critical Failure! The tether is dangerously tight. What is the absolute golden rule of ROV piloting when a cable is stuck?
+→ Pull as hard as the winch allows. → GAME OVER
+→ Give it slack and do not force it. → RECOVERY SUCCESS (Proceed to A10)
+
+
+
+
+
+
+
+
+
+
+
 
 === PATH B — MILITARY AUV ===
-B1 (Active vs Passive Sonar)
+A1 (Active vs Passive Sonar)
 Question: Cameras are useless at this range. "Active sonar" sends a loud PING and listens for the echo. "Passive sonar" only quietly listens to the ocean. You are in enemy territory. How do you search for the target?
-→ Turn on active sonar (send a PING). → B1-ALT
-→ Use passive sonar (listen only). → B2   
+→ Turn on active sonar (send a PING). → A1-ALT
+→ Use passive sonar (listen only). → A2   
 
-B1-ALT (The Jamming Zone)
+A1-ALT (The Jamming Zone)
 Question: Warning: the enemy heard your PING instantly and deployed an acoustic jammer. Your sonar screen turns to static and you are effectively blind. How do you keep tracking the enemy?
-→ Turn on the cameras to search visually. → B-FAIL-TORPEDO [FAIL: TORPEDOED]
-→ Use the MAD (Magnetic Anomaly Detector) to follow their steel hull. → B-ALT-SUCCESS [SUCCESS: PARTIAL SUCCESS]   
+→ Turn on the cameras to search visually. → A-FAIL-TORPEDO [FAIL: TORPEDOED]
+→ Use the MAD (Magnetic Anomaly Detector) to follow their steel hull. → A-ALT-SUCCESS [SUCCESS: PARTIAL SUCCESS]   
 
-B2 (Biological Noise)
+A2 (Biological Noise)
 Question: The ocean is loud. Passive sonar picks up two sounds: a random "click-click-wooo" and a constant, rhythmic "bzzzzzzz". Which signature is more likely to come from a machine?
-→ The random click-click-wooo. → B2-ALT
-→ The rhythmic bzzzzzzz. → B3   
+→ The random click-click-wooo. → A2-ALT
+→ The rhythmic bzzzzzzz. → A3   
 
-B2-ALT (The Whale Cover)
+A2-ALT (The Whale Cover)
 Question: You followed the biological noise: it was a pod of sperm whales. But a short-range sensor picks up a massive metallic shadow directly beneath them. The enemy submarine was hiding its engine noise behind the whale clicks. You are now only 50 meters away.
-→ Ram the submarine to disable its propeller. → B-FAIL-CRUSH [FAIL: CRUSHED]
-→ Quietly attach a magnetic tracker to their hull. → B-STEALTH-SUCCESS [SUCCESS: STEALTH VICTORY!]   
+→ Ram the submarine to disable its propeller. → A-FAIL-CRUSH [FAIL: CRUSHED]
+→ Quietly attach a magnetic tracker to their hull. → A-STEALTH-SUCCESS [SUCCESS: STEALTH VICTORY!]   
 
-B3 (The Decoy)
+A3 (The Decoy)
 Question: The enemy knows you are close. They release a chemical decoy that creates a massive cloud of bubbles. Sonar waves bounce off bubbles almost like a solid wall, and your screen now shows two targets. Which one is the real submarine?
-→ The huge, silent target. → B3-WARN [WARN: WASTED SECONDS]
-→ The smaller, noisy target. → B4   
+→ The huge, silent target. → A3-WARN [WARN: WASTED SECONDS]
+→ The smaller, noisy target. → A4   
 
-B4 (Magnetic Confirmation)
+A4 (Magnetic Confirmation)
 Question: You are 500 meters away and need full confirmation before acting. The suspected vessel is made of thousands of tons of steel. What sensor gives you final proof it's a real submarine and not something else?
-→ A thermometer to measure water temperature. → B4-WARN [WARN: WRONG TOOL]
-→ The MAD sensor (Magnetic Anomaly Detector). → B-SUCCESS [SUCCESS: MISSION SUCCESS!]   
+→ A thermometer to measure water temperature. → A4-WARN [WARN: WRONG TOOL]
+→ The MAD sensor (Magnetic Anomaly Detector). → A-SUCCESS [SUCCESS: MISSION SUCCESS!]   
+
+
+
+
+
+
+
+
+
+
+
 
 
 
