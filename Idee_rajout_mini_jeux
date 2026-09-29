@@ -1,0 +1,21 @@
+Ton projet a un énorme potentiel ! Le fait d'incarner une IA de drone sous-marin permet d'intégrer des mécaniques très immersives et techniques qui cassent la routine de la simple lecture.
+
+**Mini-jeu de calibration visuelle (YOLO/Caméras)**
+Pour le scénario du BlueROV2, au lieu de simplement demander ce qu'est l'objet, affiche une image délibérément floue ou bruitée. Le joueur doit agir directement comme l'algorithme YOLO : il a un temps limité (ex: 5 secondes) pour cliquer exactement sur la zone où se trouve le déchet ou le pipeline afin de dessiner une "bounding box" (boîte de délimitation). S'il clique à côté, l'IA verrouille la mauvaise cible. Tu pourrais aussi ajouter une phase préparatoire où il doit aligner deux curseurs pour calibrer la vision stéréoscopique des caméras et obtenir l'estimation de profondeur (PnP).
+
+**Analyse hydro-acoustique (Sonar passif)**
+Dans la voie du sous-marin militaire (AUV), rends l'expérience véritablement sonore. Joue un fichier audio de cliquetis de cachalots avec un léger bourdonnement de moteur caché derrière. Le joueur fait face à un oscilloscope virtuel et doit manipuler un curseur de fréquence pour "nettoyer" le signal, filtrer la faune marine, et isoler la signature acoustique du sous-marin ennemi avant de valider son choix.
+
+**Mécanique d'infiltration et de timing**
+Toujours pour l'AUV militaire, ajoute un jeu de rythme ou de timing sous haute tension pour simuler la furtivité. Un balayage radar ennemi traverse l'écran à intervalles réguliers. Le joueur doit maintenir un bouton pour faire avancer le drone, mais doit impérativement relâcher le bouton (couper les moteurs) à la seconde exacte où l'onde passe sur lui pour ne pas être détecté.
+
+**QTE (Quick Time Event) d'intégrité structurelle**
+Pour le scénario tragique du Titan, la tension doit devenir physique. Lorsque les bruits de craquement de la fibre de carbone commencent, un gros bouton d'alerte rouge "EMERGENCY DROP WEIGHTS" clignote à l'écran. Le joueur doit cliquer dessus frénétiquement (par exemple 15 fois en 3 secondes) pour forcer le système à purger les ballasts. Même si l'issue est inévitable (implosion), cela simule la panique des systèmes d'urgence face à la pression de l'abysse.
+
+**Gestion globale des ressources (Batterie / CPU)**
+Introduis une jauge persistante d'énergie en haut de l'écran. Allumer les phares LED à pleine puissance ou envoyer un "Ping" de sonar actif consomme de précieux pourcentages de batterie. Le joueur doit jongler entre obtenir de bonnes données capteurs et conserver assez d'énergie pour rentrer à la base, ajoutant une couche de réflexion stratégique par-dessus les choix narratifs.
+
+**Filtres visuels et glitchs d'interface**
+L'interface HTML elle-même peut être un terrain de jeu. Si le joueur fait un mauvais choix (comme percuter du corail ou subir le brouillage ennemi de la voie B), l'écran peut se brouiller avec des glitchs CSS, simulant des dommages électroniques, forçant le joueur à trouver un bouton de "Redémarrage Système" caché dans l'interface qui tremble.
+
+Ces mécaniques rendent le jeu beaucoup plus actif, renforçant l'illusion de vraiment contrôler les systèmes embarqués d'un robot. Laquelle de ces directions t'inspire le plus pour commencer à réfléchir à son intégration ?
