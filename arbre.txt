@@ -5,47 +5,72 @@
 [SELECT] CHOOSE YOUR VESSEL
 → BlueROV2 → A1
 → Military AUV → B1
-→ Titan Submersible → C1  
+→ Titan Submersible → C1   
 
 === PATH A — BLUEROV2 ===
 A1 (The Light Problem)
+Question: The YOLO AI works like a human eye: it needs light to recognize shapes and colors. Right now, the screen is pitch black. How should the AI proceed to find the target?
 → Stay stealthy and rely on the camera in the dark. → A1-FAIL [FAIL: HULL BREACH]
 → Turn on the LED headlights. → A2   
+
 A2 (Marine Snow)
+Question: The lights are on, but the water is full of floating sand and organic particles called "marine snow" (turbidity). How should you set your lights to see clearly without blinding the AI?
 → Maximum power, straight ahead. → A2-WARN [WARN: BACKSCATTER]
 → Low power, angled downwards. → A3   
+
 A3 (The False Positive)
+Question: An object is floating ahead. YOLO gives a 45% confidence score for "jellyfish" and a 55% score for "plastic bag". Jellyfish have smooth, round bells; this object has sharp, angular edges. What is your final decision?
 → It's an animal (jellyfish). Ignore it. → A3-WARN [WARN: SECOND LOOK]
 → It's trash (plastic bag). Investigate. → A4   
+
 A4 (Camouflage & Geometry)
+Question: You must find the underwater pipeline buried in the sand. Nature is chaotic and rarely makes perfectly straight shapes. How does the AI find the hidden pipeline?
 → By following a moving shadow on the sand. → A4-FAIL [FAIL: LOST AT SEA]
 → By detecting a perfectly straight geometric line. → A-SUCCESS [SUCCESS: MISSION SUCCESS!]   
 
 === PATH B — MILITARY AUV ===
 B1 (Active vs Passive Sonar)
+Question: Cameras are useless at this range. "Active sonar" sends a loud PING and listens for the echo. "Passive sonar" only quietly listens to the ocean. You are in enemy territory. How do you search for the target?
 → Turn on active sonar (send a PING). → B1-ALT
 → Use passive sonar (listen only). → B2   
+
 B1-ALT (The Jamming Zone)
+Question: Warning: the enemy heard your PING instantly and deployed an acoustic jammer. Your sonar screen turns to static and you are effectively blind. How do you keep tracking the enemy?
 → Turn on the cameras to search visually. → B-FAIL-TORPEDO [FAIL: TORPEDOED]
 → Use the MAD (Magnetic Anomaly Detector) to follow their steel hull. → B-ALT-SUCCESS [SUCCESS: PARTIAL SUCCESS]   
+
 B2 (Biological Noise)
+Question: The ocean is loud. Passive sonar picks up two sounds: a random "click-click-wooo" and a constant, rhythmic "bzzzzzzz". Which signature is more likely to come from a machine?
 → The random click-click-wooo. → B2-ALT
 → The rhythmic bzzzzzzz. → B3   
+
 B2-ALT (The Whale Cover)
+Question: You followed the biological noise: it was a pod of sperm whales. But a short-range sensor picks up a massive metallic shadow directly beneath them. The enemy submarine was hiding its engine noise behind the whale clicks. You are now only 50 meters away.
 → Ram the submarine to disable its propeller. → B-FAIL-CRUSH [FAIL: CRUSHED]
 → Quietly attach a magnetic tracker to their hull. → B-STEALTH-SUCCESS [SUCCESS: STEALTH VICTORY!]   
+
 B3 (The Decoy)
+Question: The enemy knows you are close. They release a chemical decoy that creates a massive cloud of bubbles. Sonar waves bounce off bubbles almost like a solid wall, and your screen now shows two targets. Which one is the real submarine?
 → The huge, silent target. → B3-WARN [WARN: WASTED SECONDS]
-→ The smaller, noisy target. → B4   B4 (Magnetic Confirmation)
+→ The smaller, noisy target. → B4   
+
+B4 (Magnetic Confirmation)
+Question: You are 500 meters away and need full confirmation before acting. The suspected vessel is made of thousands of tons of steel. What sensor gives you final proof it's a real submarine and not something else?
 → A thermometer to measure water temperature. → B4-WARN [WARN: WRONG TOOL]
-→ The MAD sensor (Magnetic Anomaly Detector). → B-SUCCESS [SUCCESS: MISSION SUCCESS!]  
+→ The MAD sensor (Magnetic Anomaly Detector). → B-SUCCESS [SUCCESS: MISSION SUCCESS!]   
+
 === PATH C — TITAN SUBMERSIBLE ===
 C1 (The Design Flaw)
+Question: Most deep-sea subs are perfect spheres made of titanium. This submersible is a cylinder made of carbon fiber, a material that is excellent at resisting pulling forces but far weaker against crushing pressure. What is the main risk of using carbon fiber for a deep dive?
 → It is too heavy and will sink too fast. → C1-WARN [WARN: WRONG PHYSICS]
 → It weakens under repeated extreme compression. → C2   
+
 C2 (The Acoustic Warning)
+Question: At 3,200m, water pressure is 320 times what it is on the surface. The hull's internal microphone picks up a sound: POP... CRACK... What does this acoustic signal mean, and what should the AI do?
 → The hull is just adjusting to the cold water. Continue the dive as planned. → C-IMPLOSION [FAIL: OUTCOME: IMPLOSION]
 → The carbon fiber layers are tearing apart (delamination). Halt the descent. → C3   
+
 C3 (The Inevitable End)
+Question: Red alert. The cracking sounds are now continuous. The carbon fiber has lost most of its structural strength at 3,500m. As the AI, what is your emergency protocol?
 → Turn on the internal pumps to push against the pressure. → C-IMPLOSION [FAIL: OUTCOME: IMPLOSION]
 → Drop all emergency weights and try to surface immediately. → C-IMPLOSION [FAIL: OUTCOME: IMPLOSION]
