@@ -99,35 +99,86 @@ Critical Failure! The tether is dangerously tight. What is the absolute golden r
 
 
 === PATH B — MILITARY AUV ===
-A1 (Active vs Passive Sonar)
-Question: Cameras are useless at this range. "Active sonar" sends a loud PING and listens for the echo. "Passive sonar" only quietly listens to the ocean. You are in enemy territory. How do you search for the target?
-→ Turn on active sonar (send a PING). → A1-ALT
-→ Use passive sonar (listen only). → A2   
 
-A1-ALT (The Jamming Zone)
-Question: Warning: the enemy heard your PING instantly and deployed an acoustic jammer. Your sonar screen turns to static and you are effectively blind. How do you keep tracking the enemy?
-→ Turn on the cameras to search visually. → A-FAIL-TORPEDO [FAIL: TORPEDOED]
-→ Use the MAD (Magnetic Anomaly Detector) to follow their steel hull. → A-ALT-SUCCESS [SUCCESS: PARTIAL SUCCESS]   
+B1 (Active vs Passive Sonar)
+→ Sonar actif (PING) → B1-ALT
+→ Sonar passif (écoute) → B2
 
-A2 (Biological Noise)
-Question: The ocean is loud. Passive sonar picks up two sounds: a random "click-click-wooo" and a constant, rhythmic "bzzzzzzz". Which signature is more likely to come from a machine?
-→ The random click-click-wooo. → A2-ALT
-→ The rhythmic bzzzzzzz. → A3   
+B1-ALT (Counter-Detection Reaction)
+→ Accélérer à pleine vitesse plein ouest → B-FAIL1 [ÉCHEC : Bruit de cavitation massif, repéré et torpillé]
+→ Silence inertiel et largage d'un leurre à dérive → B2 [SUCCÈS RÉCUPÉRATION : Décrochage réussi, retour en traque]
 
-A2-ALT (The Whale Cover)
-Question: You followed the biological noise: it was a pod of sperm whales. But a short-range sensor picks up a massive metallic shadow directly beneath them. The enemy submarine was hiding its engine noise behind the whale clicks. You are now only 50 meters away.
-→ Ram the submarine to disable its propeller. → A-FAIL-CRUSH [FAIL: CRUSHED]
-→ Quietly attach a magnetic tracker to their hull. → A-STEALTH-SUCCESS [SUCCESS: STEALTH VICTORY!]   
+B2 (Sound Velocity Profile & Thermocline)
+→ Rester au-dessus de la thermocline (60 m) → B2-ALT
+→ Plonger sous la thermocline (250 m, canal SOFAR) → B3
 
-A3 (The Decoy)
-Question: The enemy knows you are close. They release a chemical decoy that creates a massive cloud of bubbles. Sonar waves bounce off bubbles almost like a solid wall, and your screen now shows two targets. Which one is the real submarine?
-→ The huge, silent target. → A3-WARN [WARN: WASTED SECONDS]
-→ The smaller, noisy target. → A4   
+B2-ALT (Shadow Zone Blindness)
+→ Monter à l'immersion périscopique chercher un signal radar → B-FAIL2 [ÉCHEC : Détecté instantanément par la veille surface ennemie]
+→ Déployer une flûte hydrophonique remorquée à travers la couche → B3 [SUCCÈS RÉCUPÉRATION : Contact rétabli sans bruit]
 
-A4 (Magnetic Confirmation)
-Question: You are 500 meters away and need full confirmation before acting. The suspected vessel is made of thousands of tons of steel. What sensor gives you final proof it's a real submarine and not something else?
-→ A thermometer to measure water temperature. → A4-WARN [WARN: WRONG TOOL]
-→ The MAD sensor (Magnetic Anomaly Detector). → A-SUCCESS [SUCCESS: MISSION SUCCESS!]   
+B3 (Signal Processing on Weak Noise)
+→ Analyse spectrale DEMON uniquement → B3-ALT
+→ Analyse LOFAR (raies harmoniques des machines) → B4
+
+B3-ALT (Flat DEMON Spectrum)
+→ Monter le gain analogique au maximum sans filtrage → B-FAIL3 [ÉCHEC : Saturation par le bruit ambiant, capteurs aveuglés]
+→ Corrélation croisée spatio-temporelle entre hydrophones → B4 [SUCCÈS RÉCUPÉRATION : Fréquences de pompes isolées]
+
+B4 (Tactical Silence Tracking)
+→ Détecteur d'anomalie magnétique (MAD) à longue distance → B4-ALT
+→ Capteur de sillage thermique et de micro-turbulences → B5
+
+B4-ALT (Crush Depth Hazard)
+→ Allumer les propulseurs verticaux à pleine puissance → B-FAIL4 [ÉCHEC : Impulsion acoustique captée par le sous-marin]
+→ Purge lente des ballasts par gaz neutre et palier de salinité → B5 [SUCCÈS RÉCUPÉRATION : Remontée silencieuse effectuée]
+
+B5 (Biological Interference)
+→ Antenne synthétique latérale (SAS) dans le banc de poissons → B5-ALT
+→ Filtrage numérique par ondelettes → B6
+
+B5-ALT (Processor Crash)
+→ Impulsion ultrasonore d'évitement d'obstacle → B-FAIL5 [ÉCHEC : Alerte torpille adverse déclenchée]
+→ Réinitialiser le DSP avec filtre passe-bas sous 500 Hz → B6 [SUCCÈS RÉCUPÉRATION : Bruits biologiques coupés]
+
+B6 (Anechoic Tile Acoustic Signature)
+→ Écoute de cavitation sur les barres de plongée → B6-ALT
+→ Traque du bruit d'écoulement de la couche limite → B7
+
+B6-ALT (Pump-Jet Silence & Near Collision)
+→ Marche arrière d'urgence aux hélices de manœuvre → B-FAIL6 [ÉCHEC : Cavitation immédiate de l'AUV, cible alertée]
+→ Ajuster l'assiette aux ailerons et mesurer le gradient de pression → B7 [SUCCÈS RÉCUPÉRATION : Distance stabilisée à temps]
+
+B7 (Acoustic Decoy Trap)
+→ Analyse de décalage Doppler différentiel → B7-ALT
+→ Analyse de cohérence spatiale (source ponctuelle vs corps étendu) → B8
+
+B7-ALT (Decoy Explosion & Confusion)
+→ Ping sonar haute fréquence pour relocaliser la cible → B-FAIL7 [ÉCHEC : Position révélée, grenade ASM reçue]
+→ Traquer la dépression d'aspiration résiduelle du sous-marin → B8 [SUCCÈS RÉCUPÉRATION : Vrai contact repris dans l'ombre]
+
+B8 (Blind Zone Approach)
+→ Rester par le travers à distance de sécurité → B8-ALT
+→ Se glisser dans le cône arrière (remous d'hélice de la cible) → B9
+
+B8-ALT (Flank Array Alert)
+→ Virage évasif à 90° vers l'extérieur → B-FAIL8 [ÉCHEC : Flanc exposé au sonar actif ennemi, détruit]
+→ Couper les moteurs et glisser dans le sillage turbulent du virage ennemi → B9 [SUCCÈS RÉCUPÉRATION : Camouflage hydrodynamique réussi]
+
+B9 (Visual Identification & Kiosk Inspection)
+→ Caméra acoustique haute fréquence sur tuiles anéchoïques → B9-ALT
+→ LiDAR laser à balayage bleu-vert (470-530 nm) → B10
+
+B9-ALT (Black Echo Absorption)
+→ Allumer les projecteurs halogènes de navigation → B-FAIL9 [ÉCHEC : Repéré à vue par le mât optronique adverse]
+→ Basculer sur capteur de potentiel électrique sous-marin (UEP) → B10 [SUCCÈS RÉCUPÉRATION : Signature galvanique confirmée]
+
+B10 (Data Relay & Extraction)
+→ Transmission acoustique directionnelle vers un relais allié → B10-ALT
+→ Largage d'une micro-bouée filaire à salve satellite chiffrée → B-SUCCESS [SUCCÈS TOTAL : Données transmises, AUV intact]
+
+B10-ALT (Intercepted Acoustic Beam)
+→ Tenter de distancer la torpille en piquant vers la fosse → B-FAIL10 [ÉCHEC : Torpille plus rapide, destruction totale des données]
+→ Éjection pneumatique d'une capsule mémoire blindée avec balise Argos → B-ALT-SUCCESS [SUCCÈS PARTIEL : AUV sacrifié, données sauvées]
 
 
 
