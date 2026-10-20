@@ -77,3 +77,24 @@ Trouver les photos. Objectif :
 - jeu interactif : Rajouter une charge utile sur le ROV : IMU, Sonar, capteur de pression, pinger, bombe. Rajouter des types de communications : GPS, wifi, fibre optique par câble. Architecture Logiciel : ROS, Python ou Granta.
 - jeu interactif : structurer le véhicule militaire : 0 1 2 3 ou 4 compartiments , réseau ethernet interne, huile diélectrique, eau, air, moteur thermique, moteur électrique, moteur nucléaire.
 - jeu interactif : Rajouter sur le Titan des objets bizarre : manette de jeu vidéo, gobelet en polystyrène, scafandre, préservatifs.
+
+# V7
+Fichier : `V7.html` (un seul fichier, tout est intégré : images et vidéos comprises, environ 3 Mo).
+
+**Médias pendant les questions**
+- Nouvelle mise en page : le média (photo ou vidéo) est affiché à gauche, la question à droite, sans scroll. Sur petit écran, le média passe au-dessus de la question.
+- Une vidéo ou une photo par question du **Titan** : briefing (photo du Titan), coque (`titan_materiel`), objets étranges (`titan_materiel2`), puzzle sonar (`titan_observation`), débris/épave (`titan_arrivee`), bruit d'alerte à 3 200 m (extrait de `titan_materiel`, simulation de contrainte), dernière décision à 3 500 m (`titan_arrivee` teintée en rouge, alerte).
+- **Échec** (Game Over, collision) : photo des débris du Titan sur le fond marin.
+- **Implosion** : la vidéo `titan_implosion` se joue une fois, puis laisse place à la photo des débris.
+- Les vidéos sont muettes, en boucle (sauf l'implosion). Deux formats sont embarqués (MP4 puis WebM) pour qu'elles se lancent dans tous les navigateurs.
+- **BlueROV2** : sonar (A1), courbes de batterie au froid (A2), console de pilotage (A3). **AUV militaire** : sonar actif/passif (B1), thermocline (B2), image sonar (B3), AUV NemoSens (B4). Les autres écrans gardent la photo du véhicule.
+- Les images ont perdu leur nom (`auv_...`) à l'envoi : elles ont été associées d'après leur contenu. Pour changer une image, modifier le tableau `NM` dans le script (écran → média) ; les médias sont décrits dans `MEDIA`.
+
+**Textes**
+- Toutes les questions et réponses ont été raccourcies (ROV, AUV, Titan), en anglais simple.
+- Titan, question 3 : « The Twilight Zone: Sensor Puzzle » devient **« What Is in the Dark? »**. Le texte explique simplement la situation (3 échos au sonar, à identifier), avec un mode d'emploi (1. toucher un écho, 2. toucher ce que c'est), un indice, des descriptions plus claires des 3 échos et un message si les 3 ne sont pas associés.
+- Les étapes du suivi de mission du Titan ont été renommées pour être plus parlantes.
+
+**Accueil**
+- Les 5 noms sont affichés en bas : Julien Dubuc, Timm Claverie, Théo Coulongeat, Jules Laurent, Thomas Koch-Legrand.
+- Correction mobile : titre et boutons du haut ne se chevauchent plus.
