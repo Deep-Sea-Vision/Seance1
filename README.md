@@ -98,3 +98,23 @@ Fichier : `V7.html` (un seul fichier, tout est intégré : images et vidéos com
 **Accueil**
 - Les 5 noms sont affichés en bas : Julien Dubuc, Timm Claverie, Théo Coulongeat, Jules Laurent, Thomas Koch-Legrand.
 - Correction mobile : titre et boutons du haut ne se chevauchent plus.
+
+# V8
+Fichier : `V8.html` (un seul fichier, images et vidéos intégrées, environ 4 Mo).
+
+**Nouvelles photos**
+- **BlueROV2** : ROV et requin en eau profonde (A4, biais du jeu de données), bras manipulateur (A6), ROV et câble près d'une épave (A9, câble coincé).
+- **AUV militaire** : frégate en surface (B2 zone d'ombre), banc de poissons (B5), sous-marin à tuiles anéchoïques (B6 et B9), analyse Doppler (B7), frégate alliée (B10), bouées sonar et torpilles (B10 interceptée).
+- Pour changer une image : tableau `NM` (écran → média) et `MEDIA` dans le script.
+
+**Explications des erreurs**
+- Chaque mauvaise réponse affiche maintenant une explication courte, puis une ligne « Lesson » (ROV, AUV et Titan).
+- Les écrans de reprise de l'AUV commencent par « Wrong move / Not enough / Not ideal » pour dire pourquoi le choix précédent ne marche pas.
+- Titan : chaque mauvaise réponse qui mène à l'implosion a sa propre explication (froid, méduse, pompe, poids, propulseurs) au lieu d'un texte unique.
+- Mini-jeu des objets du Titan : messages plus clairs pour le scaphandre et les préservatifs.
+
+**Timer**
+- Un petit chrono s'affiche en haut à droite dès que le joueur lance la mission (après le briefing). Il se fige en cas d'échec ou de réussite, et repart à zéro à chaque nouvelle tentative.
+- À la réussite, l'écran de fin affiche **YOUR TIME** (mm:ss) et le meilleur temps enregistré sur l'appareil, pour se comparer à d'autres joueurs. Une réussite partielle (capsule de données de l'AUV) est affichée mais ne compte pas pour le meilleur temps.
+- Le meilleur temps est gardé dans le navigateur (par véhicule). Les temps ne sont pas partagés entre appareils.
+- Mobile : le titre est masqué pendant la mission pour laisser la place au chrono.
