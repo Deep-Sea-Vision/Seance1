@@ -118,3 +118,12 @@ Fichier : `V8.html` (un seul fichier, images et vidéos intégrées, environ 4 M
 - À la réussite, l'écran de fin affiche **YOUR TIME** (mm:ss) et le meilleur temps enregistré sur l'appareil, pour se comparer à d'autres joueurs. Une réussite partielle (capsule de données de l'AUV) est affichée mais ne compte pas pour le meilleur temps.
 - Le meilleur temps est gardé dans le navigateur (par véhicule). Les temps ne sont pas partagés entre appareils.
 - Mobile : le titre est masqué pendant la mission pour laisser la place au chrono.
+
+# V10
+Fichier : `V10.html`. Base : la V8 envoyée par l'équipe (photos AUV, vidéo du Game Over de l'AUV, correctif de lecture vidéo), avec tout ce qui manquait.
+
+- **Timer** : chrono en haut à droite pendant la mission, temps final et meilleur temps sur l'écran de réussite.
+- **Explications** : chaque mauvaise réponse donne une raison et une leçon (ROV, AUV, Titan). Les 13 échecs de l'AUV reprennent les explications de la V9, raccourcies en anglais simple : ce qui s'est passé, « Why », « Lesson ».
+- **Photos ROV** : requin en eau profonde (A4), bras manipulateur (A6), ROV et câble (A9). **AUV** : bouées sonar et torpilles (B10 interceptée), tuiles anéchoïques aussi à B9.
+- Implosion du Titan : une explication propre à chaque mauvaise réponse. Mini-jeu des objets : messages plus clairs.
+- Les photos et vidéos de l'équipe (poisson, tuiles, leurre, Doppler, frégate, AUV détruit) sont conservées telles quelles.
