@@ -127,3 +127,13 @@ Fichier : `V10.html`. Base : la V8 envoyée par l'équipe (photos AUV, vidéo du
 - **Photos ROV** : requin en eau profonde (A4), bras manipulateur (A6), ROV et câble (A9). **AUV** : bouées sonar et torpilles (B10 interceptée), tuiles anéchoïques aussi à B9.
 - Implosion du Titan : une explication propre à chaque mauvaise réponse. Mini-jeu des objets : messages plus clairs.
 - Les photos et vidéos de l'équipe (poisson, tuiles, leurre, Doppler, frégate, AUV détruit) sont conservées telles quelles.
+
+## V11 (mobile, learning, replay)
+Built from V10. Same story, same media, same timer.
+- **Phone:** vessel select becomes 3 cards with a PLAY button; title no longer overlaps the buttons; `100dvh` (no cut-off under browser bars); landscape layout (media left, question right); 44 px tap targets on touch screens; lighter background animation; the right-click joke is disabled on touch; fullscreen button hidden when unsupported.
+- **Learning:** after a correct answer, a short "Why it works" box appears before Continue. Underlined words (sonar, LOFAR, MAD...) show a one-line definition on tap or hover (edit `GLDATA`).
+- **Balanced answers:** choices now have similar length, so the longest is no longer the right one.
+- **New mini-games:** ROV tether (retrace your path with a d-pad, `gRetrace`) and AUV fish school (tap the echo that goes straight, `gRadar`).
+- **End screen:** up to 3 stars (0 mistakes = 3, 1-2 = 2, more = 1), time, mistakes, step, best time and best stars saved per vessel (shown on the select screen). Titan reaches 3 stars if you make no mistake before the last decision.
+- **Share:** "Share result" builds a PNG card (native share sheet on phones, download on desktop); "Copy text" copies a one-line result.
+- **Sound and vibration:** toggles on the home screen. Effects: correct, warning, fail, implosion, victory, stars. Sound is off by default.
