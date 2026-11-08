@@ -137,3 +137,11 @@ Built from V10. Same story, same media, same timer.
 - **End screen:** up to 3 stars (0 mistakes = 3, 1-2 = 2, more = 1), time, mistakes, step, best time and best stars saved per vessel (shown on the select screen). Titan reaches 3 stars if you make no mistake before the last decision.
 - **Share:** "Share result" builds a PNG card (native share sheet on phones, download on desktop); "Copy text" copies a one-line result.
 - **Sound and vibration:** toggles on the home screen. Effects: correct, warning, fail, implosion, victory, stars. Sound is off by default.
+
+## V12
+Built from V11.
+- **Glossary:** underlined words are only in the question text. Words that appear only in the answers are listed under the question ("Words in the answers: ...") so tapping never blocks an answer.
+- **Titan:** a run with 0 mistakes ends with "PERFECT RUN. SAME FATE AS THE REAL SUB." (instead of IMPLOSION) and a matching lesson.
+- **3 new mini-games:** ROV power budget (`gPower`, replaces the Thermal Drain question), AUV LOFAR (`gLofar`, tap the steady row, replaces Signal Processing), Titan wreck (`gShapes`, straight edges = metal, replaces Fish or Wreck?).
+- **AUV rescue question:** the first time a stealth run fails, the AUV gets "BONUS 4: Emergency Evasion" (node `br1`) instead of an instant Game Over. A wrong answer, or a second detection in the same run, is Game Over.
+- **Personal stats:** "My Stats" on the home screen. Per vessel: missions played, completed, best time and stars, average win time, mistakes per run, hardest step, last 5 runs. Saved on this device only, with a reset button.
